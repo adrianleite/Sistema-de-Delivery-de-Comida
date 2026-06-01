@@ -53,11 +53,11 @@ GROUP BY c.id_cliente, c.nome;
 
 -- ----------------------------------------------------------------------------------------------
 
-DROP PROCEDURE IF EXISTS sp_realizar_pedido;
+DROP PROCEDURE IF EXISTS sp_criar_pedido;
 
 DELIMITER $$
 
-CREATE PROCEDURE sp_realizar_pedido(
+CREATE PROCEDURE sp_criar_pedido(
     IN p_id_cliente INT,
     IN p_id_entregador INT
 )
