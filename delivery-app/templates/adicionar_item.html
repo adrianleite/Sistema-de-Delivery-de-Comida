@@ -1,0 +1,31 @@
+<h1>Adicionar Item</h1>
+
+<form method="post">
+
+    Pedido:
+    <select name="pedido">
+        {% for p in pedidos %}
+            <option value="{{ p.id_pedido }}">
+                Pedido {{ p.id_pedido }}
+            </option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    Prato:
+    <select name="prato">
+        {% for pr in pratos %}
+            <option value="{{ pr.id_prato }}">
+                {{ pr.nome }}
+            </option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    Quantidade:
+    <input name="quantidade" type="number" min="1" required>
+    <br><br>
+
+    <button type="submit">Adicionar</button>
+
+</form>

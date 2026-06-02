@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delivery</title>
+</head>
+<body>
+    
+    <h1>Pedidos</h1>
+
+    <h2>Filtrar Pedidos</h2>
+
+    <form method="get">
+        Cliente:
+            <input type="text" name="cliente" value="{{ request.args.get('cliente', '') }}">
+        Status:
+            <select name="status">
+                <option value="">Todos</option>
+                <option value="CRIADO" {% if request.args.get('status') == 'CRIADO' %}selected{% endif %}>CRIADO</option>
+                <option value="FINALIZADO" {% if request.args.get('status') == 'FINALIZADO' %}selected{% endif %}>FINALIZADO</option>
+            </select>
+
+            <button type="submit">Filtrar</button>
+            <a href="/">Limpar filtro</a>
+    </form>
+
+<hr>
+
+    <a href="/criar">Criar Pedido</a> |
+    <a href="/item">Adicionar Item</a>
+
+    <table border="1">
+        
+        <tr>
+            <th>ID Pedido</th>
+            <th>Cliente</th>
+            
+            <th>Prato</th>
+            <th>Quantidade</th>
+            <th>Ações</th>
+        </tr>
+
+        {% for p in pedidos %}
+        <tr>
+            <td>{{ p.id_pedido }}</td>
+            <td>{{ p.cliente }}</td>
+            
+            <td>{{ p.prato }}</td>
+            <td>{{ p.quantidade }}</td>
+            <td>
+                <a href="/total/{{ p.id_pedido }}">Total</a>
+                <a href="/fechar/{{ p.id_pedido }}">Fechar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
