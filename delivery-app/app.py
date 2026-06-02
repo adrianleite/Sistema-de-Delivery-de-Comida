@@ -102,13 +102,16 @@ def item():
 def total(id):
     con = conectar()
     cursor = con.cursor()
-    cursor.execute(f"SELECT fn_total_pedido({id})")
+
+    cursor.execute("SELECT fn_total_pedido(%s)", (id,))
     total = cursor.fetchone()[0]
 
     cursor.close()
     con.close()
 
-    return f"Total do pedido {id}: R$ {total}"
+    return render_template("total.html", total=total, id=id)
+
+
 
 # FECHAR
 @app.route("/fechar/<int:id>")
@@ -127,6 +130,22 @@ def fechar(id):
 
     return redirect("/")
 
+# RELATORIO
+@app.route("/relatorio")
+def relatorio():
+    con = conectar()
+    cursor = con.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT * FROM vw_total_gasto_cliente
+        ORDER BY total_gasto DESC
+    """)
+    dados = cursor.fetchall()
+
+    cursor.close()
+    con.close()
+
+    return render_template("relatorio.html", dados=dados)
+
 if __name__ == "__main__":
     app.run(debug=True)
-

@@ -2,56 +2,76 @@
 <html>
 <head>
     <title>Delivery</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    
-    <h1>Pedidos</h1>
+<body class="bg-light">
 
-    <h2>Filtrar Pedidos</h2>
+<div class="container mt-4">
 
-    <form method="get">
-        Cliente:
-            <input type="text" name="cliente" value="{{ request.args.get('cliente', '') }}">
-        Status:
-            <select name="status">
-                <option value="">Todos</option>
-                <option value="CRIADO" {% if request.args.get('status') == 'CRIADO' %}selected{% endif %}>CRIADO</option>
-                <option value="FINALIZADO" {% if request.args.get('status') == 'FINALIZADO' %}selected{% endif %}>FINALIZADO</option>
-            </select>
+    <h1 class="mb-4">🍔 Sistema Delivery</h1>
 
-            <button type="submit">Filtrar</button>
-            <a href="/">Limpar filtro</a>
-    </form>
+    <!-- BOTÕES -->
+    <div class="mb-3">
+        <a href="/criar" class="btn btn-primary">Novo Pedido</a>
+        <a href="/item" class="btn btn-success">Adicionar Item</a>
+        <a href="/relatorio" class="btn btn-dark">Relatório</a>
+    </div>
 
-<hr>
+    <!-- FILTRO -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" class="row g-2">
+                <div class="col-md-4">
+                    <input type="text" name="cliente" class="form-control" placeholder="Nome do cliente">
+                </div>
 
-    <a href="/criar">Criar Pedido</a> |
-    <a href="/item">Adicionar Item</a>
+                <div class="col-md-3">
+                    <select name="status" class="form-select">
+                        <option value="">Todos</option>
+                        <option value="CRIADO">Criado</option>
+                        <option value="FINALIZADO">Finalizado</option>
+                    </select>
+                </div>
 
-    <table border="1">
-        
-        <tr>
-            <th>ID Pedido</th>
-            <th>Cliente</th>
-            
-            <th>Prato</th>
-            <th>Quantidade</th>
-            <th>Ações</th>
-        </tr>
+                <div class="col-md-3">
+                    <button class="btn btn-primary w-100">Filtrar</button>
+                </div>
 
-        {% for p in pedidos %}
-        <tr>
-            <td>{{ p.id_pedido }}</td>
-            <td>{{ p.cliente }}</td>
-            
-            <td>{{ p.prato }}</td>
-            <td>{{ p.quantidade }}</td>
-            <td>
-                <a href="/total/{{ p.id_pedido }}">Total</a>
-                <a href="/fechar/{{ p.id_pedido }}">Fechar</a>
-            </td>
-        </tr>
-        {% endfor %}
+                <div class="col-md-2">
+                    <a href="/" class="btn btn-secondary w-100">Limpar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TABELA -->
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Prato</th>
+                <th>Qtd</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in pedidos %}
+            <tr>
+                <td>{{ p.id_pedido }}</td>
+                <td>{{ p.cliente }}</td>
+                <td>{{ p.prato or '-' }}</td>
+                <td>{{ p.quantidade or '-' }}</td>
+                <td>
+                    <a href="/total/{{ p.id_pedido }}" class="btn btn-sm btn-info">Total</a>
+                    <a href="/fechar/{{ p.id_pedido }}" class="btn btn-sm btn-danger">Fechar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+
+</div>
+
 </body>
 </html>
