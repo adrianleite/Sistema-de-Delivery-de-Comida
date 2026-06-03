@@ -52,6 +52,7 @@
                 <th>Cliente</th>
                 <th>Prato</th>
                 <th>Qtd</th>
+                <th>Status</th>
                 <th>Ações</th>
             </tr>
         </thead>
@@ -63,10 +64,21 @@
                 <td>{{ p.prato or '-' }}</td>
                 <td>{{ p.quantidade or '-' }}</td>
                 <td>
+
+                    {% if p.status == 'CRIADO' %}
+                        <span class="badge bg-warning text-dark">Aberto</span>
+                    {% elif p.status == 'FINALIZADO' %}
+                        <span class="badge bg-success">Fechado</span>
+                    {% else %}
+                        <span class="badge bg-secondary">{{ p.status }}</span>
+                    {% endif %}
+                    
+                <td>
                     <a href="/total/{{ p.id_pedido }}" class="btn btn-sm btn-info">Total</a>
                     <a href="/fechar/{{ p.id_pedido }}" class="btn btn-sm btn-danger">Fechar</a>
                 </td>
             </tr>
+            
             {% endfor %}
         </tbody>
     </table>
