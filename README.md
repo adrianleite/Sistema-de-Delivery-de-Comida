@@ -155,6 +155,5 @@ http://localhost:5000
 
 ## 👨‍💻 Autor: Jose Adrian Santos Leite
 
-Projeto desenvolvido para fins acadêmicos ( estudo de banco de dados + backend).
 
 ---
